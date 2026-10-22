@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G2P Codeless Web Builder</title>
+  <style>
+    body { font-family: system-ui; margin: 0; display: flex; height: 100vh; }
+    #sidebar { width: 250px; background: #1e293b; color: white; padding: 1rem; }
+    #canvas { flex: 1; background: #f8fafc; padding: 2rem; overflow: auto; }
+    .component { background: white; border: 1px dashed #ccc; margin: 0.5rem; padding: 1rem; cursor: move; }
+    button { width: 100%; margin: 0.25rem 0; padding: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h3>Codeless Builder</h3>
+    <button onclick="addComponent('hero')">Add Hero</button>
+    <button onclick="addComponent('card')">Add Card</button>
+    <button onclick="addComponent('form')">Add Form</button>
+    <button onclick="exportHTML()">Export Static Site</button>
+    <p><small>Best practices: Semantic HTML, responsive CSS, AI-prompt ready.</small></p>
+  </div>
+  <div id="canvas" contenteditable="true">
+    <h1>Your Site Starts Here</h1>
+    <p>Drag components or use buttons. Edit directly. Export for any host.</p>
+  </div>
+  <script>
+    function addComponent(type) {
+      const div = document.createElement('div');
+      div.className = 'component';
+      if (type === 'hero') div.innerHTML = '<h2>Hero Section</h2><p>Call to action</p>';
+      else if (type === 'card') div.innerHTML = '<h3>Service Card</h3><p>Description</p>';
+      else div.innerHTML = '<form><input placeholder="Name"><button>Submit</button></form>';
+      document.getElementById('canvas').appendChild(div);
+    }
+    function exportHTML() {
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Exported Site</title></head><body>${document.getElementById('canvas').innerHTML}</body></html>`;
+      const blob = new Blob([html], {type: 'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'g2p-site.html';
+      a.click();
+    }
+  </script>
+</body>
+</html>
